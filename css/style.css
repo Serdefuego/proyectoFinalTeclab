@@ -1,0 +1,644 @@
+/* ==========================================
+   SENIORMUSICAS
+   Proyecto Final - Tecnicatura en Programación
+========================================== */
+
+/*============== RESET ==============*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --color-primario:#1E3A8A;
+    --color-secundario:#3B82F6;
+    --color-exito:#10B981;
+    --color-fondo:#F7F9FC;
+    --color-texto:#374151;
+    --color-gris:#6B7280;
+    --color-blanco:#FFFFFF;
+
+    --sombra:0 10px 30px rgba(0,0,0,.08);
+
+    --radio:18px;
+
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:'Roboto',sans-serif;
+
+    background:var(--color-fondo);
+
+    color:var(--color-texto);
+
+    overflow-x:hidden;
+
+}
+
+/*============== CONTENEDOR ==============*/
+
+.container{
+
+    width:90%;
+
+    max-width:1300px;
+
+    margin:auto;
+
+}
+
+/*============== HEADER ==============*/
+
+header{
+
+    width:100%;
+
+    height:85px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 70px;
+
+    background:rgba(255,255,255,.96);
+
+    backdrop-filter:blur(10px);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    box-shadow:var(--sombra);
+
+}
+
+/*============== LOGO ==============*/
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.logo img{
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:3px solid var(--color-primario);
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+    transition:.3s;
+
+}
+
+.logo img:hover{
+
+    transform:scale(1.05);
+
+}
+
+/*============== MENU ==============*/
+
+nav ul{
+
+    display:flex;
+
+    list-style:none;
+
+    gap:40px;
+
+}
+
+nav a{
+
+    text-decoration:none;
+
+    color:var(--color-primario);
+
+    font-weight:600;
+
+    position:relative;
+
+}
+
+nav a::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:-6px;
+
+    left:0;
+
+    width:0;
+
+    height:3px;
+
+    background:var(--color-secundario);
+
+    transition:.3s;
+
+}
+
+nav a:hover::after{
+
+    width:100%;
+
+}
+
+/*============== ICONOS ==============*/
+
+.icons{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+    color:var(--color-primario);
+
+    font-size:22px;
+
+}
+
+.icons i{
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.icons i:hover{
+
+    color:var(--color-secundario);
+
+    transform:scale(1.15);
+
+}
+
+/*============== CONTADOR CARRITO ==============*/
+
+.carrito-icono{
+
+    position:relative;
+
+}
+
+#contadorCarrito{
+
+    position:absolute;
+
+    top:-8px;
+
+    right:-10px;
+
+    width:20px;
+
+    height:20px;
+
+    border-radius:50%;
+
+    background:#EF4444;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:11px;
+
+    font-weight:bold;
+
+}
+
+/*============== HERO ==============*/
+
+.hero{
+
+    width:90%;
+
+    max-width:1300px;
+
+    margin:auto;
+
+    min-height:85vh;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:60px;
+
+}
+
+.hero-text{
+
+    flex:1;
+
+}
+
+.hero-text h1{
+
+    font-family:'Poppins',sans-serif;
+
+    font-size:60px;
+
+    color:var(--color-primario);
+
+    margin-bottom:25px;
+
+}
+
+.hero-text p{
+
+    font-size:20px;
+
+    line-height:1.8;
+
+    color:var(--color-gris);
+
+    margin-bottom:35px;
+
+}
+
+.btn{
+
+    display:inline-block;
+
+    padding:18px 35px;
+
+    border-radius:50px;
+
+    background:var(--color-secundario);
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+    box-shadow:0 8px 20px rgba(59,130,246,.3);
+
+}
+
+.btn:hover{
+
+    background:var(--color-primario);
+
+    transform:translateY(-3px);
+
+}
+
+.hero-image{
+
+    flex:1;
+
+    text-align:center;
+
+}
+
+.hero-image img{
+
+    width:100%;
+
+    max-width:550px;
+
+    animation:flotar 4s ease-in-out infinite;
+
+}
+
+@keyframes flotar{
+
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-15px);}
+    100%{transform:translateY(0);}
+
+}
+
+/*============== TITULOS ==============*/
+
+section{
+
+    padding:80px 0;
+
+}
+
+section h2{
+
+    font-family:'Poppins',sans-serif;
+
+    text-align:center;
+
+    font-size:42px;
+
+    color:var(--color-primario);
+
+    margin-bottom:15px;
+
+}
+
+.subtitulo{
+
+    text-align:center;
+
+    color:var(--color-gris);
+
+    margin-bottom:50px;
+
+}
+
+/*============== PRODUCTOS ==============*/
+
+.productos-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+
+    gap:30px;
+
+}
+
+.card{
+
+    background:white;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:var(--sombra);
+
+    transition:.35s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-10px);
+
+}
+
+.card img{
+
+    width:100%;
+
+    height:250px;
+
+    object-fit:cover;
+
+    transition:.4s;
+
+}
+
+.card:hover img{
+
+    transform:scale(1.05);
+
+}
+
+.info{
+
+    padding:20px;
+
+}
+
+.info h3{
+
+    margin-bottom:10px;
+
+    color:var(--color-primario);
+
+}
+
+.precio{
+
+    color:var(--color-exito);
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    margin:15px 0;
+
+}
+
+.btn-comprar{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--color-secundario);
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.btn-comprar:hover{
+
+    background:var(--color-primario);
+
+}
+
+/*============== CATEGORIAS ==============*/
+
+.categorias-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:25px;
+
+}
+
+.categoria{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:35px;
+
+    text-align:center;
+
+    box-shadow:var(--sombra);
+
+    transition:.3s;
+
+}
+
+.categoria:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.categoria i{
+
+    font-size:45px;
+
+    color:var(--color-secundario);
+
+    margin-bottom:20px;
+
+}
+
+/*============== COMO COMPRAR ==============*/
+
+.pasos{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:25px;
+
+}
+
+.paso{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:var(--sombra);
+
+}
+
+.paso i{
+
+    font-size:45px;
+
+    color:var(--color-secundario);
+
+    margin-bottom:20px;
+
+}
+
+/*============== FOOTER ==============*/
+
+footer{
+
+    background:var(--color-primario);
+
+    color:white;
+
+    text-align:center;
+
+    padding:30px;
+
+}
+
+/*============== TOAST ==============*/
+
+.toast{
+
+    position:fixed;
+
+    right:30px;
+
+    bottom:30px;
+
+    background:var(--color-exito);
+
+    color:white;
+
+    padding:18px 25px;
+
+    border-radius:12px;
+
+    transform:translateX(400px);
+
+    transition:.4s;
+
+    box-shadow:var(--sombra);
+
+}
+
+.toast.mostrar{
+
+    transform:translateX(0);
+
+}
+
+/*============== RESPONSIVE ==============*/
+
+@media(max-width:992px){
+
+    header{
+
+        padding:20px;
+
+    }
+
+    nav{
+
+        display:none;
+
+    }
+
+    .hero{
+
+        flex-direction:column-reverse;
+
+        text-align:center;
+
+        padding-top:50px;
+
+    }
+
+    .hero-text h1{
+
+        font-size:42px;
+
+    }
+
+}
