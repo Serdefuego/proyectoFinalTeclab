@@ -11,67 +11,161 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet"
+    <link
+        rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
 
+    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <!-- =========================
-            HEADER
-    ========================== -->
+    <!-- =====================================
+         HEADER
+    ====================================== -->
 
     <header>
 
+        <!-- LOGO -->
+
         <div class="logo">
-            <img src="/assets/img/logo.jpg" alt="SeniorMusicas">
+
+            <a href="#inicio">
+
+                <img
+                    src="assets/img/logo.jpg"
+                    alt="SeniorMusicas">
+
+            </a>
+
         </div>
+
+
+        <!-- NAVEGACIÓN -->
 
         <nav>
 
             <ul>
 
-                <li><a href="#">Inicio</a></li>
+                <li>
+                    <a href="#inicio">
+                        Inicio
+                    </a>
+                </li>
 
-                <li><a href="#">Catálogo</a></li>
+                <li>
+                    <a href="#productos">
+                        Catálogo
+                    </a>
+                </li>
 
-                <li><a href="#">Categorías</a></li>
+                <li>
+                    <a href="#categorias">
+                        Categorías
+                    </a>
+                </li>
 
-                <li><a href="#">Contacto</a></li>
+                <li>
+                    <a href="#contacto">
+                        Contacto
+                    </a>
+                </li>
 
             </ul>
 
         </nav>
 
+
+        <!-- ICONOS -->
+
         <div class="icons">
 
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <!-- BUSCADOR -->
 
-            <a href="carrito.html" class="carrito-icono">
+            <button
+                id="btnBuscar"
+                class="icon-btn"
+                type="button"
+                aria-label="Buscar">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </button>
+
+
+            <!-- CARRITO -->
+
+            <a
+                href="carrito.html"
+                class="carrito-icono">
 
                 <i class="fa-solid fa-cart-shopping"></i>
 
-                <span id="contadorCarrito">0</span>
+                <span id="contadorCarrito">
+                    0
+                </span>
 
             </a>
 
-            <i class="fa-solid fa-user"></i>
+
+            <!-- USUARIO -->
+
+            <a
+                href="login.html"
+                class="usuario-icono">
+
+                <i class="fa-solid fa-user"></i>
+
+            </a>
 
         </div>
 
     </header>
 
 
-    <!-- =========================
-            HERO
-    ========================== -->
+    <!-- =====================================
+         BUSCADOR
+    ====================================== -->
 
-    <section class="hero">
+    <div
+        id="buscadorBarra"
+        class="buscador-barra">
+
+        <div class="buscador-contenido">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="inputBuscar"
+                placeholder="Buscar canciones, juegos, planificaciones...">
+
+            <button
+                id="cerrarBuscador"
+                type="button">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         HERO
+    ====================================== -->
+
+    <section
+        class="hero"
+        id="inicio">
 
         <div class="hero-text">
 
@@ -84,36 +178,70 @@
                 en formato PDF para docentes de música.
             </p>
 
-            <a href="#" class="btn">
+            <a
+                href="#productos"
+                class="btn">
+
                 Explorar catálogo
+
             </a>
 
         </div>
 
+
         <div class="hero-image">
 
-            <img src="/assets/img/hero.png" alt="Recursos Musicales">
+            <img
+                src="assets/img/hero.png"
+                alt="Recursos Musicales">
 
         </div>
 
     </section>
 
 
-    <!-- =========================
-        PRODUCTOS DESTACADOS
-    ========================== -->
+    <!-- =====================================
+         PRODUCTOS
+    ====================================== -->
 
-    <section class="destacados">
+    <section
+        class="destacados"
+        id="productos">
 
         <div class="container">
 
-            <h2>Productos Destacados</h2>
+            <h2>
+                Productos Destacados
+            </h2>
 
             <p class="subtitulo">
+
                 Descubrí algunos de los recursos más elegidos por docentes de música.
+
             </p>
 
-            <div id="productos" class="productos-grid">
+
+            <!-- MENSAJE SIN RESULTADOS -->
+
+            <div
+                id="sinResultados"
+                class="sin-resultados">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                No encontramos productos con esa búsqueda.
+
+            </div>
+
+
+            <!-- IMPORTANTE:
+                 productosListado tiene productos-grid.
+                 Así no se rompe el diseño.
+            -->
+
+            <div
+                id="productosListado"
+                class="productos-grid">
 
                 <!-- JavaScript carga los productos -->
 
@@ -124,37 +252,95 @@
     </section>
 
 
-    <!-- =========================
-        CATEGORÍAS
-    ========================== -->
+    <!-- =====================================
+         CATEGORÍAS
+    ====================================== -->
 
-    <section class="categorias">
+    <section
+        class="categorias"
+        id="categorias">
 
         <div class="container">
 
-            <h2>Categorías</h2>
+            <h2>
+                Categorías
+            </h2>
+
+            <p class="subtitulo">
+                Encontrá rápidamente el tipo de recurso que necesitás.
+            </p>
+
 
             <div class="categorias-grid">
 
-                <div class="categoria">
+                <button
+                    type="button"
+                    class="categoria"
+                    data-categoria="Canciones">
+
                     <i class="fa-solid fa-music"></i>
-                    <h3>Canciones</h3>
-                </div>
 
-                <div class="categoria">
+                    <h3>
+                        Canciones
+                    </h3>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="categoria"
+                    data-categoria="Juegos Musicales">
+
                     <i class="fa-solid fa-drum"></i>
-                    <h3>Juegos Musicales</h3>
-                </div>
 
-                <div class="categoria">
+                    <h3>
+                        Juegos Musicales
+                    </h3>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="categoria"
+                    data-categoria="Planificaciones">
+
                     <i class="fa-solid fa-book"></i>
-                    <h3>Planificaciones</h3>
-                </div>
 
-                <div class="categoria">
-                    <i class="fa-solid fa-guitar"></i>
-                    <h3>Instrumentos</h3>
-                </div>
+                    <h3>
+                        Planificaciones
+                    </h3>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="categoria"
+                    data-categoria="Efemérides">
+
+                    <i class="fa-solid fa-calendar-days"></i>
+
+                    <h3>
+                        Efemérides
+                    </h3>
+
+                </button>
+
+            </div>
+
+
+            <div class="ver-todos-container">
+
+                <button
+                    id="verTodos"
+                    class="btn-ver-todos"
+                    type="button">
+
+                    Ver todos los productos
+
+                </button>
 
             </div>
 
@@ -163,15 +349,18 @@
     </section>
 
 
-    <!-- =========================
-        CÓMO COMPRAR
-    ========================== -->
+    <!-- =====================================
+         CÓMO COMPRAR
+    ====================================== -->
 
     <section class="como-comprar">
 
         <div class="container">
 
-            <h2>¿Cómo comprar?</h2>
+            <h2>
+                ¿Cómo comprar?
+            </h2>
+
 
             <div class="pasos">
 
@@ -179,39 +368,58 @@
 
                     <i class="fa-solid fa-store"></i>
 
-                    <h3>Elegí</h3>
+                    <h3>
+                        Elegí
+                    </h3>
 
-                    <p>Seleccioná los recursos que necesitás.</p>
+                    <p>
+                        Seleccioná los recursos que necesitás.
+                    </p>
 
                 </div>
+
 
                 <div class="paso">
 
                     <i class="fa-solid fa-cart-shopping"></i>
 
-                    <h3>Agregá</h3>
+                    <h3>
+                        Agregá
+                    </h3>
 
-                    <p>Incorporalos al carrito de compras.</p>
+                    <p>
+                        Incorporalos al carrito de compras.
+                    </p>
 
                 </div>
+
 
                 <div class="paso">
 
                     <i class="fa-solid fa-credit-card"></i>
 
-                    <h3>Pagá</h3>
+                    <h3>
+                        Pagá
+                    </h3>
 
-                    <p>Realizá el pago con Mercado Pago.</p>
+                    <p>
+                        Realizá el pago con Mercado Pago.
+                    </p>
 
                 </div>
+
 
                 <div class="paso">
 
                     <i class="fa-solid fa-download"></i>
 
-                    <h3>Descargá</h3>
+                    <h3>
+                        Descargá
+                    </h3>
 
-                    <p>Accedé inmediatamente a tus archivos PDF.</p>
+                    <p>
+                        Accedé inmediatamente a tus archivos PDF.
+                    </p>
 
                 </div>
 
@@ -222,21 +430,60 @@
     </section>
 
 
-    <!-- =========================
-            FOOTER
-    ========================== -->
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
 
-    <footer>
+    <footer id="contacto">
 
-        <div class="container">
+        <div class="container footer-contenido">
+
+            <h3>
+                SeniorMusicas
+            </h3>
 
             <p>
+                Recursos musicales digitales para docentes.
+            </p>
+
+
+            <div class="footer-redes">
+
+                <a
+                    href="https://www.instagram.com/seniormusicas"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    <i class="fa-brands fa-instagram"></i>
+
+                    Instagram
+
+                </a>
+
+
+                <a href="mailto:contacto@seniormusicas.com">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    Contacto
+
+                </a>
+
+            </div>
+
+
+            <p class="copyright">
+
                 © 2026 SeniorMusicas - Todos los derechos reservados.
+
             </p>
 
         </div>
 
     </footer>
+
+
+    <!-- JAVASCRIPT -->
 
     <script src="js/app.js"></script>
 

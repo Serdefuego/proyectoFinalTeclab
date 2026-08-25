@@ -15,7 +15,8 @@ const productos = [
         nombre: "Canciones para Primavera",
         precio: 4500,
         categoria: "Canciones",
-        descripcion: "Recurso musical pensado para trabajar canciones y actividades relacionadas con la primavera en el aula.",
+        descripcion:
+            "Recurso musical pensado para trabajar canciones y actividades relacionadas con la primavera en el aula.",
         paginas: 30,
         imagen: "assets/img/primavera.png"
     },
@@ -25,7 +26,8 @@ const productos = [
         nombre: "Juegos Musicales",
         precio: 3900,
         categoria: "Juegos Musicales",
-        descripcion: "Propuesta de juegos y actividades musicales para trabajar contenidos musicales de manera dinámica.",
+        descripcion:
+            "Propuesta de juegos y actividades musicales para trabajar contenidos musicales de manera dinámica.",
         paginas: 25,
         imagen: "assets/img/juegos.png"
     },
@@ -35,7 +37,8 @@ const productos = [
         nombre: "Planificaciones Anuales",
         precio: 6200,
         categoria: "Planificaciones",
-        descripcion: "Planificaciones organizadas para acompañar el trabajo docente durante todo el ciclo lectivo.",
+        descripcion:
+            "Planificaciones organizadas para acompañar el trabajo docente durante todo el ciclo lectivo.",
         paginas: 80,
         imagen: "assets/img/planificaciones.png"
     },
@@ -45,7 +48,8 @@ const productos = [
         nombre: "Efemérides Musicales",
         precio: 3500,
         categoria: "Efemérides",
-        descripcion: "Material didáctico para abordar diferentes efemérides desde el área de Educación Musical.",
+        descripcion:
+            "Material didáctico para abordar diferentes efemérides desde el área de Educación Musical.",
         paginas: 35,
         imagen: "assets/img/efemerides.png"
     }
@@ -82,7 +86,9 @@ function guardarCarrito() {
 function agregarCarrito(id) {
 
     const producto =
-        productos.find(producto => producto.id === id);
+        productos.find(
+            producto => producto.id === id
+        );
 
 
     if (!producto) {
@@ -91,7 +97,9 @@ function agregarCarrito(id) {
 
 
     const existente =
-        carrito.find(item => item.id === id);
+        carrito.find(
+            item => item.id === id
+        );
 
 
     if (existente) {
@@ -127,7 +135,9 @@ function agregarCarrito(id) {
 function actualizarContador() {
 
     const contador =
-        document.getElementById("contadorCarrito");
+        document.getElementById(
+            "contadorCarrito"
+        );
 
 
     if (!contador) {
@@ -135,17 +145,15 @@ function actualizarContador() {
     }
 
 
-    const cantidad = carrito.reduce(
+    const cantidad =
+        carrito.reduce(
 
-        (total, producto) => {
+            (total, producto) =>
+                total + producto.cantidad,
 
-            return total + producto.cantidad;
+            0
 
-        },
-
-        0
-
-    );
+        );
 
 
     contador.textContent = cantidad;
@@ -154,35 +162,65 @@ function actualizarContador() {
 
 
 // ==========================================
-// PRODUCTOS DEL INDEX
+// MOSTRAR PRODUCTOS
 // ==========================================
 
-function mostrarProductos() {
+function mostrarProductos(lista = productos) {
 
-    const contenedorProductos =
-        document.getElementById("productos");
+    const contenedor =
+        document.getElementById(
+            "productosListado"
+        );
 
 
-    if (!contenedorProductos) {
+    if (!contenedor) {
         return;
     }
 
 
-    contenedorProductos.innerHTML = "";
+    contenedor.innerHTML = "";
 
 
-    productos.forEach(producto => {
+    const sinResultados =
+        document.getElementById(
+            "sinResultados"
+        );
 
-        contenedorProductos.innerHTML += `
+
+    if (lista.length === 0) {
+
+        if (sinResultados) {
+
+            sinResultados.style.display =
+                "block";
+
+        }
+
+        return;
+
+    }
+
+
+    if (sinResultados) {
+
+        sinResultados.style.display =
+            "none";
+
+    }
+
+
+    lista.forEach(producto => {
+
+        contenedor.innerHTML += `
 
             <div class="card">
 
-                <a href="producto.html?id=${producto.id}">
+                <a
+                    href="producto.html?id=${producto.id}">
 
                     <img
                         src="${producto.imagen}"
-                        alt="${producto.nombre}"
-                    >
+                        alt="${producto.nombre}">
 
                 </a>
 
@@ -238,7 +276,9 @@ function mostrarProductos() {
 function mostrarDetalleProducto() {
 
     const contenedor =
-        document.getElementById("detalleProducto");
+        document.getElementById(
+            "detalleProducto"
+        );
 
 
     if (!contenedor) {
@@ -247,7 +287,9 @@ function mostrarDetalleProducto() {
 
 
     const parametros =
-        new URLSearchParams(window.location.search);
+        new URLSearchParams(
+            window.location.search
+        );
 
 
     const id =
@@ -255,7 +297,9 @@ function mostrarDetalleProducto() {
 
 
     const producto =
-        productos.find(producto => producto.id === id);
+        productos.find(
+            producto => producto.id === id
+        );
 
 
     if (!producto) {
@@ -263,8 +307,6 @@ function mostrarDetalleProducto() {
         contenedor.innerHTML = `
 
             <div class="producto-no-encontrado">
-
-                <i class="fa-solid fa-circle-exclamation"></i>
 
                 <h2>
                     Producto no encontrado
@@ -299,19 +341,16 @@ function mostrarDetalleProducto() {
 
         <article class="producto-detalle">
 
-
             <div class="producto-detalle-imagen">
 
                 <img
                     src="${producto.imagen}"
-                    alt="${producto.nombre}"
-                >
+                    alt="${producto.nombre}">
 
             </div>
 
 
             <div class="producto-detalle-info">
-
 
                 <span class="producto-categoria">
 
@@ -321,9 +360,7 @@ function mostrarDetalleProducto() {
 
 
                 <h1>
-
                     ${producto.nombre}
-
                 </h1>
 
 
@@ -344,35 +381,23 @@ function mostrarDetalleProducto() {
                 <ul class="producto-caracteristicas">
 
                     <li>
-
                         <i class="fa-solid fa-file-pdf"></i>
-
                         Archivo digital en formato PDF
-
                     </li>
 
                     <li>
-
                         <i class="fa-solid fa-file-lines"></i>
-
                         ${producto.paginas} páginas
-
                     </li>
 
                     <li>
-
                         <i class="fa-solid fa-download"></i>
-
                         Descarga digital
-
                     </li>
 
                     <li>
-
                         <i class="fa-solid fa-music"></i>
-
                         Recurso educativo musical
-
                     </li>
 
                 </ul>
@@ -407,25 +432,265 @@ function mostrarDetalleProducto() {
 
 
 // ==========================================
-// NOTIFICACIÓN DEL CARRITO
+// BUSCADOR
+// ==========================================
+
+function iniciarBuscador() {
+
+    const boton =
+        document.getElementById(
+            "btnBuscar"
+        );
+
+    const barra =
+        document.getElementById(
+            "buscadorBarra"
+        );
+
+    const input =
+        document.getElementById(
+            "inputBuscar"
+        );
+
+    const cerrar =
+        document.getElementById(
+            "cerrarBuscador"
+        );
+
+
+    if (
+        !boton ||
+        !barra ||
+        !input ||
+        !cerrar
+    ) {
+
+        return;
+
+    }
+
+
+    boton.addEventListener(
+        "click",
+        () => {
+
+            barra.classList.toggle(
+                "activo"
+            );
+
+
+            if (
+                barra.classList.contains(
+                    "activo"
+                )
+            ) {
+
+                input.focus();
+
+            }
+
+        }
+    );
+
+
+    cerrar.addEventListener(
+        "click",
+        () => {
+
+            barra.classList.remove(
+                "activo"
+            );
+
+            input.value = "";
+
+            mostrarProductos();
+
+        }
+    );
+
+
+    input.addEventListener(
+        "input",
+        () => {
+
+            const texto =
+                input.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const filtrados =
+                productos.filter(
+                    producto => {
+
+                        return (
+                            producto.nombre
+                                .toLowerCase()
+                                .includes(texto)
+                            ||
+                            producto.categoria
+                                .toLowerCase()
+                                .includes(texto)
+                            ||
+                            producto.descripcion
+                                .toLowerCase()
+                                .includes(texto)
+                        );
+
+                    }
+                );
+
+
+            mostrarProductos(
+                filtrados
+            );
+
+
+            const seccion =
+                document.getElementById(
+                    "productos"
+                );
+
+
+            if (texto !== "" && seccion) {
+
+                seccion.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            }
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// CATEGORÍAS
+// ==========================================
+
+function iniciarCategorias() {
+
+    const botones =
+        document.querySelectorAll(
+            ".categoria[data-categoria]"
+        );
+
+
+    botones.forEach(
+        boton => {
+
+            boton.addEventListener(
+                "click",
+                () => {
+
+                    const categoria =
+                        boton.dataset.categoria;
+
+
+                    const filtrados =
+                        productos.filter(
+
+                            producto =>
+                                producto.categoria ===
+                                categoria
+
+                        );
+
+
+                    mostrarProductos(
+                        filtrados
+                    );
+
+
+                    const productosSeccion =
+                        document.getElementById(
+                            "productos"
+                        );
+
+
+                    if (productosSeccion) {
+
+                        productosSeccion
+                            .scrollIntoView({
+                                behavior: "smooth"
+                            });
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    const verTodos =
+        document.getElementById(
+            "verTodos"
+        );
+
+
+    if (verTodos) {
+
+        verTodos.addEventListener(
+            "click",
+            () => {
+
+                mostrarProductos();
+
+
+                const productosSeccion =
+                    document.getElementById(
+                        "productos"
+                    );
+
+
+                if (productosSeccion) {
+
+                    productosSeccion
+                        .scrollIntoView({
+                            behavior: "smooth"
+                        });
+
+                }
+
+            }
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// NOTIFICACIÓN
 // ==========================================
 
 function mostrarToast(nombre) {
 
     const anterior =
-        document.querySelector(".toast");
+        document.querySelector(
+            ".toast"
+        );
 
 
     if (anterior) {
+
         anterior.remove();
+
     }
 
 
     const toast =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
-    toast.className = "toast";
+    toast.className =
+        "toast";
 
 
     toast.innerHTML = `
@@ -437,28 +702,43 @@ function mostrarToast(nombre) {
     `;
 
 
-    document.body.appendChild(toast);
+    document.body.appendChild(
+        toast
+    );
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        toast.classList.add("mostrar");
+            toast.classList.add(
+                "mostrar"
+            );
 
-    }, 50);
-
-
-    setTimeout(() => {
-
-        toast.classList.remove("mostrar");
-
-    }, 2500);
+        },
+        50
+    );
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        toast.remove();
+            toast.classList.remove(
+                "mostrar"
+            );
 
-    }, 3000);
+        },
+        2500
+    );
+
+
+    setTimeout(
+        () => {
+
+            toast.remove();
+
+        },
+        3000
+    );
 
 }
 
@@ -470,7 +750,9 @@ function mostrarToast(nombre) {
 function iniciarRegistro() {
 
     const formulario =
-        document.getElementById("formRegistro");
+        document.getElementById(
+            "formRegistro"
+        );
 
 
     if (!formulario) {
@@ -480,35 +762,37 @@ function iniciarRegistro() {
 
     formulario.addEventListener(
         "submit",
-        function (evento) {
+        evento => {
 
             evento.preventDefault();
 
 
             const nombre =
-                document.getElementById("nombre")
+                document
+                    .getElementById("nombre")
                     .value
                     .trim();
 
 
             const email =
-                document.getElementById("email")
+                document
+                    .getElementById("email")
                     .value
                     .trim()
                     .toLowerCase();
 
 
             const password =
-                document.getElementById("password")
+                document
+                    .getElementById("password")
                     .value;
 
 
             const confirmarPassword =
-                document.getElementById("confirmarPassword")
+                document
+                    .getElementById("confirmarPassword")
                     .value;
 
-
-            // Validar campos
 
             if (
                 nombre === "" ||
@@ -523,10 +807,9 @@ function iniciarRegistro() {
                 );
 
                 return;
+
             }
 
-
-            // Contraseña mínima
 
             if (password.length < 6) {
 
@@ -536,12 +819,14 @@ function iniciarRegistro() {
                 );
 
                 return;
+
             }
 
 
-            // Comparar contraseñas
-
-            if (password !== confirmarPassword) {
+            if (
+                password !==
+                confirmarPassword
+            ) {
 
                 mostrarMensajeRegistro(
                     "Las contraseñas no coinciden.",
@@ -549,29 +834,26 @@ function iniciarRegistro() {
                 );
 
                 return;
+
             }
 
 
-            // Recuperar usuarios
-
             const usuarios =
                 JSON.parse(
-                    localStorage.getItem("usuarios")
+                    localStorage.getItem(
+                        "usuarios"
+                    )
                 ) || [];
 
 
-            // Buscar email existente
-
-            const usuarioExistente =
+            const existente =
                 usuarios.find(
-
                     usuario =>
-                        usuario.email.toLowerCase() === email
-
+                        usuario.email === email
                 );
 
 
-            if (usuarioExistente) {
+            if (existente) {
 
                 mostrarMensajeRegistro(
                     "Ya existe una cuenta con ese correo electrónico.",
@@ -579,30 +861,28 @@ function iniciarRegistro() {
                 );
 
                 return;
+
             }
 
 
-            // Crear usuario
-
-            const nuevoUsuario = {
+            usuarios.push({
 
                 id: Date.now(),
 
-                nombre: nombre,
+                nombre,
 
-                email: email,
+                email,
 
-                password: password
+                password
 
-            };
-
-
-            usuarios.push(nuevoUsuario);
+            });
 
 
             localStorage.setItem(
                 "usuarios",
-                JSON.stringify(usuarios)
+                JSON.stringify(
+                    usuarios
+                )
             );
 
 
@@ -615,14 +895,15 @@ function iniciarRegistro() {
             formulario.reset();
 
 
-            // Enviar al login
+            setTimeout(
+                () => {
 
-            setTimeout(() => {
+                    window.location.href =
+                        "login.html";
 
-                window.location.href =
-                    "login.html";
-
-            }, 1500);
+                },
+                1500
+            );
 
         }
     );
@@ -634,10 +915,15 @@ function iniciarRegistro() {
 // MENSAJE REGISTRO
 // ==========================================
 
-function mostrarMensajeRegistro(texto, tipo) {
+function mostrarMensajeRegistro(
+    texto,
+    tipo
+) {
 
     const mensaje =
-        document.getElementById("mensajeRegistro");
+        document.getElementById(
+            "mensajeRegistro"
+        );
 
 
     if (!mensaje) {
@@ -645,20 +931,16 @@ function mostrarMensajeRegistro(texto, tipo) {
     }
 
 
-    mensaje.textContent = texto;
+    mensaje.textContent =
+        texto;
 
 
-    if (tipo === "error") {
+    mensaje.className =
+        tipo === "error"
 
-        mensaje.className =
-            "mensaje-form mensaje-error";
+            ? "mensaje-form mensaje-error"
 
-    } else {
-
-        mensaje.className =
-            "mensaje-form mensaje-exito";
-
-    }
+            : "mensaje-form mensaje-exito";
 
 }
 
@@ -670,7 +952,9 @@ function mostrarMensajeRegistro(texto, tipo) {
 function iniciarLogin() {
 
     const formulario =
-        document.getElementById("formLogin");
+        document.getElementById(
+            "formLogin"
+        );
 
 
     if (!formulario) {
@@ -680,44 +964,46 @@ function iniciarLogin() {
 
     formulario.addEventListener(
         "submit",
-        function (evento) {
+        evento => {
 
             evento.preventDefault();
 
 
             const email =
-                document.getElementById("loginEmail")
+                document
+                    .getElementById(
+                        "loginEmail"
+                    )
                     .value
                     .trim()
                     .toLowerCase();
 
 
             const password =
-                document.getElementById("loginPassword")
+                document
+                    .getElementById(
+                        "loginPassword"
+                    )
                     .value;
 
 
-            // Recuperar usuarios
-
             const usuarios =
                 JSON.parse(
-                    localStorage.getItem("usuarios")
+                    localStorage.getItem(
+                        "usuarios"
+                    )
                 ) || [];
 
-
-            // Buscar usuario
 
             const usuario =
                 usuarios.find(
 
                     usuario =>
-                        usuario.email.toLowerCase() === email &&
+                        usuario.email === email &&
                         usuario.password === password
 
                 );
 
-
-            // Usuario incorrecto
 
             if (!usuario) {
 
@@ -727,14 +1013,11 @@ function iniciarLogin() {
                 );
 
                 return;
+
             }
 
 
-            // ==========================================
-            // CREAR SESIÓN
-            // ==========================================
-
-            const usuarioSesion = {
+            const sesion = {
 
                 id: usuario.id,
 
@@ -747,7 +1030,9 @@ function iniciarLogin() {
 
             localStorage.setItem(
                 "usuarioSesion",
-                JSON.stringify(usuarioSesion)
+                JSON.stringify(
+                    sesion
+                )
             );
 
 
@@ -760,14 +1045,15 @@ function iniciarLogin() {
             formulario.reset();
 
 
-            // Ir al inicio
+            setTimeout(
+                () => {
 
-            setTimeout(() => {
+                    window.location.href =
+                        "index.html";
 
-                window.location.href =
-                    "index.html";
-
-            }, 1200);
+                },
+                1200
+            );
 
         }
     );
@@ -779,10 +1065,15 @@ function iniciarLogin() {
 // MENSAJE LOGIN
 // ==========================================
 
-function mostrarMensajeLogin(texto, tipo) {
+function mostrarMensajeLogin(
+    texto,
+    tipo
+) {
 
     const mensaje =
-        document.getElementById("mensajeLogin");
+        document.getElementById(
+            "mensajeLogin"
+        );
 
 
     if (!mensaje) {
@@ -790,98 +1081,97 @@ function mostrarMensajeLogin(texto, tipo) {
     }
 
 
-    mensaje.textContent = texto;
+    mensaje.textContent =
+        texto;
 
 
-    if (tipo === "error") {
+    mensaje.className =
+        tipo === "error"
 
-        mensaje.className =
-            "mensaje-form mensaje-error";
+            ? "mensaje-form mensaje-error"
 
-    } else {
-
-        mensaje.className =
-            "mensaje-form mensaje-exito";
-
-    }
+            : "mensaje-form mensaje-exito";
 
 }
 
 
 // ==========================================
-// MOSTRAR USUARIO CONECTADO
+// USUARIO CONECTADO
 // ==========================================
 
 function actualizarUsuario() {
 
-    const iconosUsuario =
-        document.querySelectorAll(".usuario-icono");
+    const enlaces =
+        document.querySelectorAll(
+            ".usuario-icono"
+        );
 
 
-    if (iconosUsuario.length === 0) {
+    if (
+        enlaces.length === 0
+    ) {
+
         return;
+
     }
 
 
     const usuario =
         JSON.parse(
-            localStorage.getItem("usuarioSesion")
+            localStorage.getItem(
+                "usuarioSesion"
+            )
         );
 
 
-    iconosUsuario.forEach(icono => {
+    enlaces.forEach(
+        enlace => {
 
+            if (!usuario) {
 
-        // ==========================================
-        // USUARIO NO CONECTADO
-        // ==========================================
+                enlace.href =
+                    "login.html";
 
-        if (!usuario) {
+                enlace.innerHTML = `
 
-            icono.href = "login.html";
+                    <i class="fa-solid fa-user"></i>
 
-            icono.innerHTML = `
-                <i class="fa-solid fa-user"></i>
-            `;
+                `;
 
-            return;
-
-        }
-
-
-        // ==========================================
-        // USUARIO CONECTADO
-        // ==========================================
-
-        icono.href = "#";
-
-        icono.title =
-            `Sesión iniciada como ${usuario.nombre}`;
-
-
-        icono.innerHTML = `
-
-            <i class="fa-solid fa-user-check"></i>
-
-            <span class="nombre-usuario">
-                ${usuario.nombre}
-            </span>
-
-        `;
-
-
-        icono.addEventListener(
-            "click",
-            function (evento) {
-
-                evento.preventDefault();
-
-                cerrarSesion();
+                return;
 
             }
-        );
 
-    });
+
+            enlace.href = "#";
+
+
+            enlace.innerHTML = `
+
+                <i class="fa-solid fa-user-check"></i>
+
+                <span class="nombre-usuario">
+
+                    ${usuario.nombre}
+
+                </span>
+
+            `;
+
+
+            enlace.addEventListener(
+                "click",
+                evento => {
+
+                    evento.preventDefault();
+
+                    cerrarSesion();
+
+                }
+            );
+
+        }
+    );
 
 }
 
@@ -915,7 +1205,7 @@ function cerrarSesion() {
 
 
 // ==========================================
-// INICIAR APLICACIÓN
+// INICIAR
 // ==========================================
 
 document.addEventListener(
@@ -927,6 +1217,10 @@ document.addEventListener(
         mostrarDetalleProducto();
 
         actualizarContador();
+
+        iniciarBuscador();
+
+        iniciarCategorias();
 
         iniciarRegistro();
 
