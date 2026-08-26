@@ -526,3 +526,167 @@ main {
     }
 
 }
+/* ==========================================
+   COMPRA FINALIZADA
+========================================== */
+
+.compra-exitosa {
+
+    background: white;
+
+    padding: 50px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.08);
+
+}
+
+
+.compra-exitosa > i {
+
+    font-size: 65px;
+
+    color: #10B981;
+
+    margin-bottom: 20px;
+
+}
+
+
+.compra-exitosa h2 {
+
+    color: #1E3A8A;
+
+    margin-bottom: 10px;
+
+}
+
+
+.compra-exitosa > p {
+
+    color: #6B7280;
+
+    margin-bottom: 35px;
+
+}
+
+
+/* DESCARGAS */
+
+#listaDescargas {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.descarga-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 18px;
+
+    background: #F7F9FC;
+
+    border-radius: 12px;
+
+}
+
+
+.descarga-item div {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.descarga-item .fa-file-pdf {
+
+    color: #EF4444;
+
+    font-size: 25px;
+
+}
+
+
+.btn-descargar {
+
+    padding: 12px 20px;
+
+    background: #10B981;
+
+    color: white;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+
+.btn-descargar:hover {
+
+    background: #059669;
+
+}
+
+
+.volver-tienda {
+
+    display: inline-block;
+
+    margin-top: 10px;
+
+    color: #1E3A8A;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:600px) {
+
+    .descarga-item {
+
+        flex-direction: column;
+
+        gap: 15px;
+
+    }
+
+
+    .btn-descargar {
+
+        width: 100%;
+
+        text-align: center;
+
+    }
+
+}
