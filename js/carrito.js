@@ -511,13 +511,11 @@ const respuesta =
     }
 
 }
-
-
 // ==========================================
 // COMPROBAR RETORNO DE MERCADO PAGO
 // ==========================================
 
-function comprobarRetornoMercadoPago() {
+async function comprobarRetornoMercadoPago() {
 
     const parametros =
         new URLSearchParams(
@@ -529,9 +527,13 @@ function comprobarRetornoMercadoPago() {
         parametros.get("status");
 
 
+    const paymentId =
+        parametros.get("payment_id");
+
+
     // Si no venimos de Mercado Pago
     if (!status) {
-        return;
+        return false;
     }
 
 
@@ -541,11 +543,131 @@ function comprobarRetornoMercadoPago() {
 
     if (status === "approved") {
 
+
+        // Verificar que venga payment_id
+        if (!paymentId) {
+
+            mostrarMensajeEstado(
+                "No se pudo verificar el pago",
+                "Mercado Pago no devolvió el identificador del pago.",
+                "error"
+            );
+
+            return true;
+        }
+
+
         mostrarMensajeEstado(
-            "Pago aprobado",
-            "Tu pago fue aprobado. Estamos validando tu compra.",
-            "exito"
+            "Validando pago",
+            "Estamos verificando tu compra con Mercado Pago.",
+            "pendiente"
         );
+
+
+        try {
+
+
+            // ==================================
+            // CONSULTAR BACKEND
+            // ==================================
+
+            const respuesta =
+                await fetch(
+
+                    `https://proyectofinalteclab.onrender.com/verificar-pago/${paymentId}`
+
+                );
+
+
+            const datos =
+                await respuesta.json();
+
+
+            console.log(
+                "Verificación del pago:",
+                datos
+            );
+
+
+            if (!respuesta.ok) {
+
+                throw new Error(
+                    datos.error ||
+                    "No se pudo verificar el pago"
+                );
+
+            }
+
+
+            // ==================================
+            // PAGO CONFIRMADO
+            // ==================================
+
+            if (datos.aprobado) {
+
+
+                const compraPendiente =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "compraPendiente"
+                        )
+                    ) || [];
+
+
+                mostrarCompraAprobada(
+                    compraPendiente,
+                    datos
+                );
+
+
+                // Vaciar carrito
+                carrito = [];
+
+
+                localStorage.removeItem(
+                    "carrito"
+                );
+
+
+                return true;
+
+            }
+
+
+            // ==================================
+            // PAGO NO CONFIRMADO
+            // ==================================
+
+            mostrarMensajeEstado(
+                "Pago no confirmado",
+                "Mercado Pago todavía no confirmó este pago.",
+                "pendiente"
+            );
+
+
+            return true;
+
+        }
+
+        catch (error) {
+
+
+            console.error(
+                "Error verificando pago:",
+                error
+            );
+
+
+            mostrarMensajeEstado(
+                "Error al verificar el pago",
+                "No pudimos validar la compra en este momento. Intentá nuevamente.",
+                "error"
+            );
+
+
+            return true;
+
+        }
 
     }
 
@@ -562,6 +684,8 @@ function comprobarRetornoMercadoPago() {
             "pendiente"
         );
 
+        return true;
+
     }
 
 
@@ -569,7 +693,10 @@ function comprobarRetornoMercadoPago() {
     // PAGO RECHAZADO
     // ======================================
 
-    if (status === "failure") {
+    if (
+        status === "failure" ||
+        status === "rejected"
+    ) {
 
         mostrarMensajeEstado(
             "Pago no aprobado",
@@ -577,7 +704,134 @@ function comprobarRetornoMercadoPago() {
             "error"
         );
 
+        return true;
+
     }
+
+
+    return false;
+
+}
+
+
+// ==========================================
+// MOSTRAR COMPRA APROBADA
+// ==========================================
+
+function mostrarCompraAprobada(
+    productosComprados,
+    datosPago
+) {
+
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    let productosHTML = "";
+
+
+    productosComprados.forEach(
+        producto => {
+
+
+            productosHTML += `
+
+                <div class="producto-comprado">
+
+                    <h3>
+                        ${producto.nombre}
+                    </h3>
+
+                    <p>
+                        Cantidad:
+                        ${producto.cantidad}
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    contenedor.innerHTML = `
+
+        <div class="compra-exitosa">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <h2>
+                ¡Compra realizada!
+            </h2>
+
+            <p>
+                Tu pago fue confirmado correctamente.
+            </p>
+
+            <p>
+                Número de pago:
+                <strong>
+                    ${datosPago.payment_id}
+                </strong>
+            </p>
+
+            <div class="productos-comprados">
+
+                <h3>
+                    Productos comprados
+                </h3>
+
+                ${productosHTML}
+
+            </div>
+
+            <a
+                href="index.html"
+                class="volver-tienda"
+            >
+                Volver a la tienda
+            </a>
+
+        </div>
+
+    `;
+
+
+    if (botonComprar) {
+
+        botonComprar.style.display =
+            "none";
+
+    }
+
+
+    if (botonVaciar) {
+
+        botonVaciar.style.display =
+            "none";
+
+    }
+
+
+    if (totalElemento) {
+
+        totalElemento.style.display =
+            "none";
+
+    }
+
+
+    localStorage.removeItem(
+        "compraPendiente"
+    );
+
+
+    localStorage.removeItem(
+        "totalCompraPendiente"
+    );
 
 }
 
@@ -675,24 +929,18 @@ function mostrarMensajeEstado(
 
 document.addEventListener(
     "DOMContentLoaded",
-    function () {
 
-        comprobarRetornoMercadoPago();
-
-        const parametros =
-            new URLSearchParams(
-                window.location.search
-            );
+    async function () {
 
 
-        const status =
-            parametros.get("status");
+        const vieneDeMercadoPago =
+            await comprobarRetornoMercadoPago();
 
 
         // Mostrar carrito solamente
         // si NO venimos de Mercado Pago
 
-        if (!status) {
+        if (!vieneDeMercadoPago) {
 
             mostrarCarrito();
 
