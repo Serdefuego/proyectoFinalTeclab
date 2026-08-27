@@ -391,25 +391,19 @@ async function pagarConMercadoPago() {
 
 const respuesta =
     await fetch(
-        "https://proyectofinalteclab.onrender.com/crear-preferencia", {
+        "https://proyectofinalteclab.onrender.com/crear-preferencia",
+        {
+            method: "POST",
 
-                    method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-                    headers: {
-
-                        "Content-Type":
-                            "application/json"
-
-                    },
-
-                    body: JSON.stringify({
-
-                        carrito: carrito
-
-                    })
-
-                }
-            );
+            body: JSON.stringify({
+                carrito: carrito
+            })
+        }
+    );
 
 
         // ======================================
