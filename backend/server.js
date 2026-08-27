@@ -4,7 +4,8 @@ const dotenv = require("dotenv");
 
 const {
     MercadoPagoConfig,
-    Preference
+    Preference,
+    Payment
 } = require("mercadopago");
 
 
@@ -41,7 +42,7 @@ app.use(express.json());
 if (!process.env.MP_ACCESS_TOKEN) {
 
     console.error(
-        "ERROR: No se encontró MP_ACCESS_TOKEN en el archivo .env"
+        "ERROR: No se encontró MP_ACCESS_TOKEN"
     );
 
 }
@@ -58,6 +59,14 @@ const client =
             process.env.MP_ACCESS_TOKEN
 
     });
+
+
+// ==========================================
+// URL DEL FRONTEND
+// ==========================================
+
+const FRONTEND_URL =
+    "https://serdefuego.github.io/proyectoFinalTeclab";
 
 
 // ==========================================
@@ -225,21 +234,46 @@ app.post(
                 new Preference(client);
 
 
-            const respuesta =
-                await preference.create({
+const respuesta =
+    await preference.create({
 
-                    body: {
+        body: {
 
-                        items: items
+            items: items,
 
-                    }
+            back_urls: {
 
-                });
+                success:
+                    "https://serdefuego.github.io/proyectoFinalTeclab/carrito.html",
+
+                pending:
+                    "https://serdefuego.github.io/proyectoFinalTeclab/carrito.html",
+
+                failure:
+                    "https://serdefuego.github.io/proyectoFinalTeclab/carrito.html"
+
+            },
+
+            auto_return:
+                "approved"
+
+        }
+
+    });
 
 
             console.log(
                 "Preferencia creada correctamente"
             );
+            console.log(
+                        "BACK URL SUCCESS:",
+                        `${FRONTEND_URL}/carrito.html`
+                    );
+
+            console.log(
+                        "AUTO RETURN:",
+                        "approved"
+                    );
 
             console.log(
                 "ID:",
@@ -284,7 +318,6 @@ app.post(
             console.error(
                 "================================"
             );
-
 
             console.error(
                 error
@@ -336,6 +369,131 @@ app.post(
 
 
 // ==========================================
+// VERIFICAR PAGO
+// ==========================================
+
+app.get(
+    "/verificar-pago/:paymentId",
+
+    async (req, res) => {
+
+        try {
+
+            const paymentId =
+                req.params.paymentId;
+
+
+            if (!paymentId) {
+
+                return res.status(400).json({
+
+                    aprobado: false,
+
+                    error:
+                        "Falta el ID del pago"
+
+                });
+
+            }
+
+
+            console.log(
+                "Verificando pago:",
+                paymentId
+            );
+
+
+            const payment =
+                new Payment(client);
+
+
+            const respuesta =
+                await payment.get({
+
+                    id: paymentId
+
+                });
+
+
+            console.log(
+                "Estado del pago:",
+                respuesta.status
+            );
+
+
+            // ==================================
+            // PAGO APROBADO
+            // ==================================
+
+            if (
+                respuesta.status ===
+                "approved"
+            ) {
+
+                return res.json({
+
+                    aprobado:
+                        true,
+
+                    status:
+                        respuesta.status,
+
+                    payment_id:
+                        respuesta.id,
+
+                    monto:
+                        respuesta.transaction_amount
+
+                });
+
+            }
+
+
+            // ==================================
+            // PAGO NO APROBADO
+            // ==================================
+
+            return res.json({
+
+                aprobado:
+                    false,
+
+                status:
+                    respuesta.status,
+
+                payment_id:
+                    respuesta.id
+
+            });
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Error verificando pago:",
+                error
+            );
+
+
+            res.status(500).json({
+
+                aprobado:
+                    false,
+
+                error:
+                    error.message ||
+                    "No se pudo verificar el pago"
+
+            });
+
+        }
+
+    }
+);
+
+
+// ==========================================
 // INICIAR SERVIDOR
 // ==========================================
 
@@ -345,7 +503,7 @@ app.listen(
     () => {
 
         console.log(
-            `Servidor SeniorMusicas funcionando en http://localhost:${PORT}`
+            `Servidor SeniorMusicas funcionando en puerto ${PORT}`
         );
 
     }
