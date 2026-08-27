@@ -389,10 +389,9 @@ async function pagarConMercadoPago() {
         // ENVIAR CARRITO AL BACKEND
         // ======================================
 
-        const respuesta =
-            await fetch(
-                "http://localhost:3000/crear-preferencia",
-                {
+const respuesta =
+    await fetch(
+        "https://proyectofinalteclab.onrender.com/crear-preferencia", {
 
                     method: "POST",
 
