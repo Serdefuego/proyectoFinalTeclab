@@ -4,11 +4,38 @@
 
 
 // ==========================================
+// CONFIGURACIÓN
+// ==========================================
+
+const BACKEND_URL =
+    "https://proyectofinalteclab.onrender.com";
+
+
+// ==========================================
+// PDF DE CADA PRODUCTO
+// ==========================================
+
+const pdfProductos = {
+
+    1: "assets/pdf/primavera.pdf",
+
+    2: "assets/pdf/juegos.pdf",
+
+    3: "assets/pdf/planificaciones.pdf",
+
+    4: "assets/pdf/efemerides.pdf"
+
+};
+
+
+// ==========================================
 // RECUPERAR CARRITO
 // ==========================================
 
 let carrito =
-    JSON.parse(localStorage.getItem("carrito")) || [];
+    JSON.parse(
+        localStorage.getItem("carrito")
+    ) || [];
 
 
 // ==========================================
@@ -16,16 +43,24 @@ let carrito =
 // ==========================================
 
 const contenedor =
-    document.getElementById("contenedorCarrito");
+    document.getElementById(
+        "contenedorCarrito"
+    );
 
 const totalElemento =
-    document.getElementById("total");
+    document.getElementById(
+        "total"
+    );
 
 const botonVaciar =
-    document.getElementById("vaciar");
+    document.getElementById(
+        "vaciar"
+    );
 
 const botonComprar =
-    document.getElementById("comprar");
+    document.getElementById(
+        "comprar"
+    );
 
 
 // ==========================================
@@ -40,6 +75,10 @@ function mostrarCarrito() {
 
     contenedor.innerHTML = "";
 
+
+    // ======================================
+    // CARRITO VACÍO
+    // ======================================
 
     if (carrito.length === 0) {
 
@@ -61,17 +100,26 @@ function mostrarCarrito() {
 
 
         if (totalElemento) {
-            totalElemento.textContent = "$0";
+
+            totalElemento.textContent =
+                "$0";
+
         }
 
 
         if (botonVaciar) {
-            botonVaciar.disabled = true;
+
+            botonVaciar.disabled =
+                true;
+
         }
 
 
         if (botonComprar) {
-            botonComprar.disabled = true;
+
+            botonComprar.disabled =
+                true;
+
         }
 
 
@@ -79,88 +127,110 @@ function mostrarCarrito() {
     }
 
 
+    // ======================================
+    // ACTIVAR BOTONES
+    // ======================================
+
     if (botonVaciar) {
-        botonVaciar.disabled = false;
+
+        botonVaciar.disabled =
+            false;
+
+        botonVaciar.style.display =
+            "";
+
     }
 
 
     if (botonComprar) {
-        botonComprar.disabled = false;
+
+        botonComprar.disabled =
+            false;
+
+        botonComprar.style.display =
+            "";
+
     }
 
 
-    carrito.forEach(producto => {
+    // ======================================
+    // MOSTRAR PRODUCTOS
+    // ======================================
 
-        const subtotal =
-            producto.precio * producto.cantidad;
+    carrito.forEach(
+        producto => {
 
-
-        contenedor.innerHTML += `
-            <div class="item">
-
-                <img
-                    src="${producto.imagen}"
-                    alt="${producto.nombre}"
-                >
+            const subtotal =
+                producto.precio *
+                producto.cantidad;
 
 
-                <div class="info">
+            contenedor.innerHTML += `
+                <div class="item">
 
-                    <h3>
-                        ${producto.nombre}
-                    </h3>
+                    <img
+                        src="${producto.imagen}"
+                        alt="${producto.nombre}"
+                    >
 
+                    <div class="info">
 
-                    <p>
-                        Precio:
-                        $${producto.precio.toLocaleString("es-AR")}
-                    </p>
+                        <h3>
+                            ${producto.nombre}
+                        </h3>
 
+                        <p>
+                            Precio:
+                            $${Number(producto.precio)
+                                .toLocaleString("es-AR")}
+                        </p>
 
-                    <div class="controles">
+                        <div class="controles">
 
-                        <button onclick="restar(${producto.id})">
-                            -
-                        </button>
+                            <button
+                                onclick="restar(${producto.id})"
+                            >
+                                -
+                            </button>
 
+                            <span>
+                                ${producto.cantidad}
+                            </span>
 
-                        <span>
-                            ${producto.cantidad}
-                        </span>
+                            <button
+                                onclick="sumar(${producto.id})"
+                            >
+                                +
+                            </button>
 
+                        </div>
 
-                        <button onclick="sumar(${producto.id})">
-                            +
+                    </div>
+
+                    <div class="subtotal">
+
+                        <strong>
+                            $${subtotal
+                                .toLocaleString("es-AR")}
+                        </strong>
+
+                        <button
+                            class="btn-eliminar"
+                            onclick="eliminar(${producto.id})"
+                            title="Eliminar producto"
+                        >
+
+                            <i class="fa-solid fa-trash"></i>
+
                         </button>
 
                     </div>
 
                 </div>
+            `;
 
-
-                <div class="subtotal">
-
-                    <strong>
-                        $${subtotal.toLocaleString("es-AR")}
-                    </strong>
-
-
-                    <button
-                        class="btn-eliminar"
-                        onclick="eliminar(${producto.id})"
-                        title="Eliminar producto"
-                    >
-
-                        <i class="fa-solid fa-trash"></i>
-
-                    </button>
-
-                </div>
-
-            </div>
-        `;
-
-    });
+        }
+    );
 
 
     calcularTotal();
@@ -179,8 +249,8 @@ function calcularTotal() {
             (total, producto) => {
 
                 return total +
-                    producto.precio *
-                    producto.cantidad;
+                    Number(producto.precio) *
+                    Number(producto.cantidad);
 
             },
             0
@@ -191,7 +261,8 @@ function calcularTotal() {
 
         totalElemento.textContent =
             "$" +
-            totalCompra.toLocaleString("es-AR");
+            totalCompra
+                .toLocaleString("es-AR");
 
     }
 
@@ -209,7 +280,6 @@ function guardarCarrito() {
         JSON.stringify(carrito)
     );
 
-
     mostrarCarrito();
 
 }
@@ -223,7 +293,9 @@ function sumar(id) {
 
     const producto =
         carrito.find(
-            producto => producto.id === id
+            producto =>
+                Number(producto.id) ===
+                Number(id)
         );
 
 
@@ -233,7 +305,6 @@ function sumar(id) {
 
 
     producto.cantidad++;
-
 
     guardarCarrito();
 
@@ -248,7 +319,9 @@ function restar(id) {
 
     const producto =
         carrito.find(
-            producto => producto.id === id
+            producto =>
+                Number(producto.id) ===
+                Number(id)
         );
 
 
@@ -260,12 +333,15 @@ function restar(id) {
     producto.cantidad--;
 
 
-    if (producto.cantidad <= 0) {
+    if (
+        producto.cantidad <= 0
+    ) {
 
         carrito =
             carrito.filter(
                 producto =>
-                    producto.id !== id
+                    Number(producto.id) !==
+                    Number(id)
             );
 
     }
@@ -285,7 +361,8 @@ function eliminar(id) {
     carrito =
         carrito.filter(
             producto =>
-                producto.id !== id
+                Number(producto.id) !==
+                Number(id)
         );
 
 
@@ -304,7 +381,9 @@ if (botonVaciar) {
         "click",
         function () {
 
-            if (carrito.length === 0) {
+            if (
+                carrito.length === 0
+            ) {
                 return;
             }
 
@@ -346,13 +425,16 @@ if (botonComprar) {
         "click",
         async function () {
 
-            if (carrito.length === 0) {
+            if (
+                carrito.length === 0
+            ) {
 
                 alert(
                     "No podés finalizar la compra porque el carrito está vacío."
                 );
 
                 return;
+
             }
 
 
@@ -377,7 +459,9 @@ async function pagarConMercadoPago() {
         }
 
 
-        botonComprar.disabled = true;
+        botonComprar.disabled =
+            true;
+
 
         botonComprar.innerHTML = `
             <i class="fa-solid fa-spinner fa-spin"></i>
@@ -389,21 +473,31 @@ async function pagarConMercadoPago() {
         // ENVIAR CARRITO AL BACKEND
         // ======================================
 
-const respuesta =
-    await fetch(
-        "https://proyectofinalteclab.onrender.com/crear-preferencia",
-        {
-            method: "POST",
+        const respuesta =
+            await fetch(
+                `${BACKEND_URL}/crear-preferencia`,
+                {
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                    method:
+                        "POST",
 
-            body: JSON.stringify({
-                carrito: carrito
-            })
-        }
-    );
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            carrito:
+                                carrito
+
+                        })
+
+                }
+            );
 
 
         // ======================================
@@ -431,7 +525,7 @@ const respuesta =
 
 
         // ======================================
-        // COMPROBAR URL DE MERCADO PAGO
+        // COMPROBAR URL
         // ======================================
 
         if (!datos.init_point) {
@@ -462,8 +556,8 @@ const respuesta =
                 (total, producto) => {
 
                     return total +
-                        producto.precio *
-                        producto.cantidad;
+                        Number(producto.precio) *
+                        Number(producto.cantidad);
 
                 },
                 0
@@ -472,7 +566,7 @@ const respuesta =
 
         localStorage.setItem(
             "totalCompraPendiente",
-            totalPendiente
+            String(totalPendiente)
         );
 
 
@@ -494,23 +588,26 @@ const respuesta =
 
 
         alert(
-            "No se pudo iniciar el pago con Mercado Pago. Revisá la terminal del backend y la consola del navegador."
+            "No se pudo iniciar el pago con Mercado Pago."
         );
 
 
         if (botonComprar) {
 
-            botonComprar.disabled = false;
+            botonComprar.disabled =
+                false;
 
-            botonComprar.innerHTML = `
-                Finalizar compra
-            `;
+
+            botonComprar.innerHTML =
+                "Finalizar compra";
 
         }
 
     }
 
 }
+
+
 // ==========================================
 // COMPROBAR RETORNO DE MERCADO PAGO
 // ==========================================
@@ -531,9 +628,14 @@ async function comprobarRetornoMercadoPago() {
         parametros.get("payment_id");
 
 
-    // Si no venimos de Mercado Pago
+    // ======================================
+    // NO VENIMOS DE MERCADO PAGO
+    // ======================================
+
     if (!status) {
+
         return false;
+
     }
 
 
@@ -541,41 +643,39 @@ async function comprobarRetornoMercadoPago() {
     // PAGO APROBADO
     // ======================================
 
-    if (status === "approved") {
+    if (
+        status === "approved"
+    ) {
 
-
-        // Verificar que venga payment_id
         if (!paymentId) {
 
             mostrarMensajeEstado(
-                "No se pudo verificar el pago",
-                "Mercado Pago no devolvió el identificador del pago.",
+                "Error al verificar",
+                "Mercado Pago no devolvió el número del pago.",
                 "error"
             );
 
             return true;
+
         }
 
 
         mostrarMensajeEstado(
-            "Validando pago",
-            "Estamos verificando tu compra con Mercado Pago.",
+            "Validando compra",
+            "Estamos verificando tu pago con Mercado Pago...",
             "pendiente"
         );
 
 
         try {
 
-
             // ==================================
-            // CONSULTAR BACKEND
+            // VERIFICAR EN EL BACKEND
             // ==================================
 
             const respuesta =
                 await fetch(
-
-                    `https://proyectofinalteclab.onrender.com/verificar-pago/${paymentId}`
-
+                    `${BACKEND_URL}/verificar-pago/${paymentId}`
                 );
 
 
@@ -589,43 +689,118 @@ async function comprobarRetornoMercadoPago() {
             );
 
 
-            if (!respuesta.ok) {
+            if (
+                !respuesta.ok ||
+                !datos.aprobado
+            ) {
 
-                throw new Error(
-                    datos.error ||
-                    "No se pudo verificar el pago"
+                mostrarMensajeEstado(
+                    "Pago no validado",
+                    "No pudimos confirmar que el pago haya sido aprobado.",
+                    "error"
                 );
+
+                return true;
 
             }
 
 
             // ==================================
-            // PAGO CONFIRMADO
+            // RECUPERAR PRODUCTOS COMPRADOS
             // ==================================
 
-            if (datos.aprobado) {
+            let compra =
+                JSON.parse(
+                    localStorage.getItem(
+                        "compraPendiente"
+                    )
+                ) || [];
 
 
-                const compraPendiente =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "compraPendiente"
-                        )
-                    ) || [];
+            // Si recargó la página después
+            // de una compra ya confirmada
 
-
-                mostrarCompraAprobada(
-                    compraPendiente,
-                    datos
+            const ultimaCompra =
+                JSON.parse(
+                    localStorage.getItem(
+                        "ultimaCompra"
+                    )
                 );
 
 
-                // Vaciar carrito
-                carrito = [];
+            if (
+                compra.length === 0 &&
+                ultimaCompra &&
+                String(
+                    ultimaCompra.paymentId
+                ) ===
+                String(paymentId)
+            ) {
+
+                compra =
+                    ultimaCompra.productos || [];
+
+            }
 
 
-                localStorage.removeItem(
-                    "carrito"
+            if (
+                compra.length === 0
+            ) {
+
+                mostrarMensajeEstado(
+                    "Pago confirmado",
+                    "El pago fue confirmado, pero no pudimos recuperar los productos de esta compra.",
+                    "error"
+                );
+
+                return true;
+
+            }
+
+
+            // ==================================
+            // CALCULAR TOTAL LOCAL
+            // ==================================
+
+            const totalCompra =
+                compra.reduce(
+                    (total, producto) => {
+
+                        return total +
+                            Number(producto.precio) *
+                            Number(producto.cantidad);
+
+                    },
+                    0
+                );
+
+
+            // ==================================
+            // COMPROBAR MONTO
+            // ==================================
+
+            if (
+                datos.monto !== undefined &&
+                Number(datos.monto) !==
+                Number(totalCompra)
+            ) {
+
+                console.error(
+                    "El monto pagado no coincide.",
+                    {
+                        montoMercadoPago:
+                            datos.monto,
+
+                        montoCarrito:
+                            totalCompra
+                    }
+                );
+
+
+                mostrarMensajeEstado(
+                    "No se pudo validar la compra",
+                    "El monto del pago no coincide con los productos comprados.",
+                    "error"
                 );
 
 
@@ -635,13 +810,56 @@ async function comprobarRetornoMercadoPago() {
 
 
             // ==================================
-            // PAGO NO CONFIRMADO
+            // GUARDAR ÚLTIMA COMPRA
             // ==================================
 
-            mostrarMensajeEstado(
-                "Pago no confirmado",
-                "Mercado Pago todavía no confirmó este pago.",
-                "pendiente"
+            localStorage.setItem(
+                "ultimaCompra",
+                JSON.stringify({
+
+                    paymentId:
+                        paymentId,
+
+                    productos:
+                        compra,
+
+                    total:
+                        totalCompra
+
+                })
+            );
+
+
+            // ==================================
+            // MOSTRAR COMPRA
+            // ==================================
+
+            mostrarCompraConfirmada(
+                paymentId,
+                compra,
+                totalCompra
+            );
+
+
+            // ==================================
+            // VACIAR CARRITO
+            // ==================================
+
+            carrito = [];
+
+
+            localStorage.removeItem(
+                "carrito"
+            );
+
+
+            localStorage.removeItem(
+                "compraPendiente"
+            );
+
+
+            localStorage.removeItem(
+                "totalCompraPendiente"
             );
 
 
@@ -651,7 +869,6 @@ async function comprobarRetornoMercadoPago() {
 
         catch (error) {
 
-
             console.error(
                 "Error verificando pago:",
                 error
@@ -659,8 +876,8 @@ async function comprobarRetornoMercadoPago() {
 
 
             mostrarMensajeEstado(
-                "Error al verificar el pago",
-                "No pudimos validar la compra en este momento. Intentá nuevamente.",
+                "Error",
+                "No se pudo verificar el pago. Intentá recargar la página.",
                 "error"
             );
 
@@ -676,7 +893,9 @@ async function comprobarRetornoMercadoPago() {
     // PAGO PENDIENTE
     // ======================================
 
-    if (status === "pending") {
+    if (
+        status === "pending"
+    ) {
 
         mostrarMensajeEstado(
             "Pago pendiente",
@@ -684,18 +903,20 @@ async function comprobarRetornoMercadoPago() {
             "pendiente"
         );
 
+
         return true;
 
     }
 
 
     // ======================================
-    // PAGO RECHAZADO
+    // PAGO RECHAZADO / CANCELADO
     // ======================================
 
     if (
         status === "failure" ||
-        status === "rejected"
+        status === "rejected" ||
+        status === "cancelled"
     ) {
 
         mostrarMensajeEstado(
@@ -704,25 +925,26 @@ async function comprobarRetornoMercadoPago() {
             "error"
         );
 
+
         return true;
 
     }
 
 
-    return false;
+    return true;
 
 }
 
 
 // ==========================================
-// MOSTRAR COMPRA APROBADA
+// MOSTRAR COMPRA CONFIRMADA
 // ==========================================
 
-function mostrarCompraAprobada(
-    productosComprados,
-    datosPago
+function mostrarCompraConfirmada(
+    paymentId,
+    productos,
+    totalCompra
 ) {
-
 
     if (!contenedor) {
         return;
@@ -732,12 +954,36 @@ function mostrarCompraAprobada(
     let productosHTML = "";
 
 
-    productosComprados.forEach(
+    productos.forEach(
         producto => {
+
+            const pdf =
+                pdfProductos[
+                    Number(producto.id)
+                ];
+
+
+            let botonDescarga = "";
+
+
+            if (pdf) {
+
+                botonDescarga = `
+                    <a
+                        href="${pdf}"
+                        download
+                        class="btn-descargar"
+                        target="_blank"
+                    >
+                        <i class="fa-solid fa-file-pdf"></i>
+                        Descargar PDF
+                    </a>
+                `;
+
+            }
 
 
             productosHTML += `
-
                 <div class="producto-comprado">
 
                     <h3>
@@ -749,8 +995,9 @@ function mostrarCompraAprobada(
                         ${producto.cantidad}
                     </p>
 
-                </div>
+                    ${botonDescarga}
 
+                </div>
             `;
 
         }
@@ -758,7 +1005,6 @@ function mostrarCompraAprobada(
 
 
     contenedor.innerHTML = `
-
         <div class="compra-exitosa">
 
             <i class="fa-solid fa-circle-check"></i>
@@ -771,10 +1017,10 @@ function mostrarCompraAprobada(
                 Tu pago fue confirmado correctamente.
             </p>
 
-            <p>
+            <p class="numero-pago">
                 Número de pago:
                 <strong>
-                    ${datosPago.payment_id}
+                    ${paymentId}
                 </strong>
             </p>
 
@@ -796,9 +1042,28 @@ function mostrarCompraAprobada(
             </a>
 
         </div>
-
     `;
 
+
+    // ======================================
+    // MOSTRAR TOTAL
+    // ======================================
+
+    if (totalElemento) {
+
+        totalElemento.textContent =
+            "$" +
+            Number(totalCompra)
+                .toLocaleString(
+                    "es-AR"
+                );
+
+    }
+
+
+    // ======================================
+    // OCULTAR BOTONES DEL CARRITO
+    // ======================================
 
     if (botonComprar) {
 
@@ -815,29 +1080,11 @@ function mostrarCompraAprobada(
 
     }
 
-
-    if (totalElemento) {
-
-        totalElemento.style.display =
-            "none";
-
-    }
-
-
-    localStorage.removeItem(
-        "compraPendiente"
-    );
-
-
-    localStorage.removeItem(
-        "totalCompraPendiente"
-    );
-
 }
 
 
 // ==========================================
-// MOSTRAR ESTADO DEL PAGO
+// MOSTRAR MENSAJE DE ESTADO
 // ==========================================
 
 function mostrarMensajeEstado(
@@ -855,7 +1102,9 @@ function mostrarMensajeEstado(
         "fa-circle-info";
 
 
-    if (tipo === "exito") {
+    if (
+        tipo === "exito"
+    ) {
 
         icono =
             "fa-circle-check";
@@ -863,7 +1112,9 @@ function mostrarMensajeEstado(
     }
 
 
-    if (tipo === "error") {
+    if (
+        tipo === "error"
+    ) {
 
         icono =
             "fa-circle-xmark";
@@ -871,7 +1122,9 @@ function mostrarMensajeEstado(
     }
 
 
-    if (tipo === "pendiente") {
+    if (
+        tipo === "pendiente"
+    ) {
 
         icono =
             "fa-clock";
@@ -880,7 +1133,6 @@ function mostrarMensajeEstado(
 
 
     contenedor.innerHTML = `
-
         <div class="compra-exitosa">
 
             <i class="fa-solid ${icono}"></i>
@@ -901,7 +1153,6 @@ function mostrarMensajeEstado(
             </a>
 
         </div>
-
     `;
 
 
@@ -929,16 +1180,14 @@ function mostrarMensajeEstado(
 
 document.addEventListener(
     "DOMContentLoaded",
-
     async function () {
-
 
         const vieneDeMercadoPago =
             await comprobarRetornoMercadoPago();
 
 
-        // Mostrar carrito solamente
-        // si NO venimos de Mercado Pago
+        // Mostrar carrito únicamente si
+        // no estamos regresando de Mercado Pago
 
         if (!vieneDeMercadoPago) {
 
