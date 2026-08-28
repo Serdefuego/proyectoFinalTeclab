@@ -403,7 +403,7 @@ main {
 
 
 /* ==========================================
-   BOTONES
+   BOTONES DEL CARRITO
 ========================================== */
 
 #vaciar,
@@ -463,70 +463,6 @@ main {
 
 
 /* ==========================================
-   RESPONSIVE
-========================================== */
-
-@media (max-width: 900px) {
-
-    main {
-
-        grid-template-columns: 1fr;
-
-    }
-
-}
-
-
-@media (max-width: 600px) {
-
-    header {
-
-        padding: 20px;
-
-        flex-direction: column;
-
-        gap: 15px;
-
-    }
-
-
-    main {
-
-        width: 95%;
-
-        margin: 30px auto;
-
-    }
-
-
-    .item {
-
-        flex-direction: column;
-
-        align-items: stretch;
-
-    }
-
-
-    .item img {
-
-        width: 100%;
-
-        height: 220px;
-
-    }
-
-
-    .subtotal {
-
-        flex-direction: row;
-
-        justify-content: space-between;
-
-    }
-
-}
-/* ==========================================
    COMPRA FINALIZADA
 ========================================== */
 
@@ -540,19 +476,20 @@ main {
 
     text-align: center;
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
 
 }
 
 
 .compra-exitosa > i {
 
+    display: block;
+
     font-size: 65px;
 
     color: #10B981;
 
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 
 }
 
@@ -561,7 +498,7 @@ main {
 
     color: #1E3A8A;
 
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 
 }
 
@@ -570,12 +507,217 @@ main {
 
     color: #6B7280;
 
+    margin-bottom: 25px;
+
+    line-height: 1.5;
+
+}
+
+
+/* ==========================================
+   NÚMERO DE PAGO
+========================================== */
+
+.numero-pago {
+
+    margin-top: 25px;
+
+    margin-bottom: 35px !important;
+
+}
+
+
+/* ==========================================
+   PRODUCTOS COMPRADOS
+========================================== */
+
+.productos-comprados {
+
+    width: 100%;
+
+    margin-top: 30px;
+
     margin-bottom: 35px;
 
 }
 
 
-/* DESCARGAS */
+.productos-comprados > h3 {
+
+    color: #374151;
+
+    font-size: 22px;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* ==========================================
+   PRODUCTO COMPRADO
+========================================== */
+
+.producto-comprado {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 16px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.producto-comprado h3 {
+
+    color: #374151;
+
+    font-size: 20px;
+
+    margin: 0;
+
+    padding: 0;
+
+    line-height: 1.4;
+
+}
+
+
+.producto-comprado p {
+
+    display: block;
+
+    color: #6B7280;
+
+    margin: 0;
+
+    padding: 0;
+
+    line-height: 1.5;
+
+}
+
+
+/* ==========================================
+   BOTÓN DESCARGAR PDF
+========================================== */
+
+.btn-descargar {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    min-height: 48px;
+
+    padding: 12px 22px;
+
+    margin: 5px 0 0 0;
+
+    background: #10B981;
+
+    color: white;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    font-size: 16px;
+
+    line-height: 1;
+
+    transition: .3s;
+
+}
+
+
+.btn-descargar:hover {
+
+    background: #059669;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* ==========================================
+   ICONO DEL BOTÓN PDF
+========================================== */
+
+.btn-descargar i {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 20px;
+
+    height: 20px;
+
+    margin: 0;
+
+    padding: 0;
+
+    color: white;
+
+    font-size: 18px;
+
+    line-height: 1;
+
+}
+
+
+/* ==========================================
+   VOLVER A LA TIENDA
+========================================== */
+
+.volver-tienda {
+
+    display: inline-block;
+
+    margin-top: 10px;
+
+    color: #1E3A8A;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    line-height: 1.5;
+
+    transition: .3s;
+
+}
+
+
+.volver-tienda:hover {
+
+    color: #3B82F6;
+
+}
+
+
+/* ==========================================
+   DESCARGAS ANTIGUAS
+========================================== */
 
 #listaDescargas {
 
@@ -627,54 +769,98 @@ main {
 }
 
 
-.btn-descargar {
+/* ==========================================
+   RESPONSIVE TABLET
+========================================== */
 
-    padding: 12px 20px;
+@media (max-width: 900px) {
 
-    background: #10B981;
+    main {
 
-    color: white;
+        grid-template-columns: 1fr;
 
-    border-radius: 8px;
-
-    text-decoration: none;
-
-    font-weight: 600;
-
-    transition: .3s;
+    }
 
 }
 
 
-.btn-descargar:hover {
+/* ==========================================
+   RESPONSIVE CELULAR
+========================================== */
 
-    background: #059669;
+@media (max-width: 600px) {
 
-}
+    header {
 
-
-.volver-tienda {
-
-    display: inline-block;
-
-    margin-top: 10px;
-
-    color: #1E3A8A;
-
-    text-decoration: none;
-
-    font-weight: 600;
-
-}
-
-
-/* RESPONSIVE */
-
-@media(max-width:600px) {
-
-    .descarga-item {
+        padding: 20px;
 
         flex-direction: column;
+
+        gap: 15px;
+
+    }
+
+
+    main {
+
+        width: 95%;
+
+        margin: 30px auto;
+
+    }
+
+
+    .item {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .item img {
+
+        width: 100%;
+
+        height: 220px;
+
+    }
+
+
+    .subtotal {
+
+        flex-direction: row;
+
+        justify-content: space-between;
+
+    }
+
+
+    .compra-exitosa {
+
+        padding: 35px 20px;
+
+    }
+
+
+    .compra-exitosa > i {
+
+        font-size: 55px;
+
+    }
+
+
+    .productos-comprados {
+
+        margin-top: 25px;
+
+        margin-bottom: 30px;
+
+    }
+
+
+    .producto-comprado {
 
         gap: 15px;
 
@@ -685,76 +871,17 @@ main {
 
         width: 100%;
 
-        text-align: center;
+        max-width: 280px;
 
     }
 
-}
-/* ==========================================
-   COMPRA CONFIRMADA
-========================================== */
 
-.productos-comprados {
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
+    .descarga-item {
 
-.productos-comprados > h3 {
-    margin-bottom: 20px;
-}
+        flex-direction: column;
 
-.producto-comprado {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
+        gap: 15px;
 
-    margin-bottom: 25px;
-}
+    }
 
-.producto-comprado h3 {
-    margin: 0;
-    line-height: 1.3;
-}
-
-.producto-comprado p {
-    margin: 0;
-    line-height: 1.4;
-}
-
-
-/* BOTÓN DESCARGAR PDF */
-
-.btn-descargar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    padding: 12px 22px;
-    margin-top: 5px;
-
-    background: #10b981;
-    color: white;
-
-    text-decoration: none;
-    font-weight: 600;
-
-    border-radius: 10px;
-
-    line-height: 1.2;
-}
-
-.btn-descargar i {
-    display: inline-block;
-    font-size: 18px;
-    line-height: 1;
-}
-
-
-/* VOLVER A LA TIENDA */
-
-.compra-exitosa .volver-tienda {
-    display: inline-block;
-    margin-top: 15px;
 }
