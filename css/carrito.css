@@ -690,3 +690,71 @@ main {
     }
 
 }
+/* ==========================================
+   COMPRA CONFIRMADA
+========================================== */
+
+.productos-comprados {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.productos-comprados > h3 {
+    margin-bottom: 20px;
+}
+
+.producto-comprado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 25px;
+}
+
+.producto-comprado h3 {
+    margin: 0;
+    line-height: 1.3;
+}
+
+.producto-comprado p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+
+/* BOTÓN DESCARGAR PDF */
+
+.btn-descargar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 12px 22px;
+    margin-top: 5px;
+
+    background: #10b981;
+    color: white;
+
+    text-decoration: none;
+    font-weight: 600;
+
+    border-radius: 10px;
+
+    line-height: 1.2;
+}
+
+.btn-descargar i {
+    display: inline-block;
+    font-size: 18px;
+    line-height: 1;
+}
+
+
+/* VOLVER A LA TIENDA */
+
+.compra-exitosa .volver-tienda {
+    display: inline-block;
+    margin-top: 15px;
+}
